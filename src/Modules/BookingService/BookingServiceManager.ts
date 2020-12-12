@@ -5,9 +5,9 @@ import {IUser} from "../User/Interfaces/IUser";
 import {IHotelService} from "../HotelService/Interfaces/IHotelService";
 import {BookingService} from "./BookingService";
 import {
+    AlreadyRatedBookingStatusException,
     BookingNotFoundException,
     InvalidBookingStatusException,
-    InvalidRatingException,
     NotCheckedOutException
 } from "../../Utils/Exceptions";
 
@@ -41,7 +41,9 @@ export class BookingServiceManager {
         const defer = q.defer<IBookingService>();
         this.get(booking_id)
             .then(booking => {
-                if(booking.status == BOOKING_STATUS.CONFIRMED && (status == BOOKING_STATUS.CHECK_IN || status == BOOKING_STATUS.CANCELED)){
+                if(booking.status == BOOKING_STATUS.RATED){
+                    throw new AlreadyRatedBookingStatusException();
+                }else if(booking.status == BOOKING_STATUS.CONFIRMED && (status == BOOKING_STATUS.CHECK_IN || status == BOOKING_STATUS.CANCELED)){
                     booking.status = status;
                 }else if(booking.status == BOOKING_STATUS.CHECK_IN && status == BOOKING_STATUS.CHECK_OUT){
                     booking.status = status;
@@ -81,6 +83,8 @@ export class BookingServiceManager {
 
 
         BookingService.find(query)
+            .populate('guest','name email')
+            .populate('service')
             .exec()
             .then(bookings => defer.resolve(bookings))
             .catch(error => defer.reject(error));
@@ -92,8 +96,8 @@ export class BookingServiceManager {
         this.get(booking_id)
             .then(booking => {
                 if(booking.status != BOOKING_STATUS.CHECK_OUT) throw new NotCheckedOutException();
-                if(rating < 0 || rating > 5) throw new InvalidRatingException();
                 booking.rating = rating;
+                booking.status = BOOKING_STATUS.RATED;
                 return booking.save();
             })
             .then(booking => defer.resolve(booking))

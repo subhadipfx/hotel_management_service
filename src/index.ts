@@ -30,9 +30,6 @@ class App {
 
     private bootStrap():void{
 
-        console.log(__dirname);
-        // this.app.set('public',path.join(__dirname,"/../public"));
-
         this.app.use('/public',express.static(path.join(__dirname,'../public')));
 
         const upperBound = '1gb';
@@ -43,7 +40,6 @@ class App {
         passportUseStrategy(PassportStrategy.JWTStrategy());
 
         this.app.use(cors());
-        // this.app.use(fileUpload());
 
         this.app.use(function(req, res, next) {
             res.header("Access-Control-Allow-Origin", "*");

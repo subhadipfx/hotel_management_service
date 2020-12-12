@@ -10,9 +10,6 @@ export class BookingServiceController {
     public static create(request: Request, response: Response): Response{
         const message = new ResponseMessage();
 
-        if(!request.body.guest_id){
-            message.addError("Invalid Guest");
-        }
         if(!request.body.service_id){
             message.addError("Invalid Service");
         }
@@ -25,14 +22,10 @@ export class BookingServiceController {
             return response.status(HTTP_STATUS.BAD_REQUEST).json(message);
         }
 
-        const {guest_id, service_id, amount} = request.body;
-
-        UserManager.instance().getUser(guest_id)
-            .then(guest => {
-                if(!guest) throw new UserNotFoundException();
-                return [guest, HotelServiceManager.instance().get(service_id)]
-            })
-            .spread((guest, service) => {
+        const {service_id, amount} = request.body;
+        const guest:any = request.user;
+        HotelServiceManager.instance().get(service_id)
+            .then(( service) => {
                 if(!service) throw new ServiceNotFoundException();
                 return BookingServiceManager.instance().create(guest, service, amount)
             })
@@ -86,24 +79,12 @@ export class BookingServiceController {
         return ;
     }
 
-    public static userBookings(request: Request, response: Response): Response {
+    public static userBookings(request: Request, response: Response) {
         const message = new ResponseMessage();
 
-        if(!request.query.guest_id){
-            message.addError("Invalid Guest ID");
-        }
+        const guest:any = request.user;
 
-        if(message.hasErrors()){
-            return response.status(HTTP_STATUS.BAD_REQUEST).json(message);
-        }
-
-        const guest_id = String(request.query.guest_id);
-
-        UserManager.instance().getUser(guest_id)
-            .then(guest => {
-                if(!guest) throw new UserNotFoundException();
-               return BookingServiceManager.instance().list(guest)
-            })
+        BookingServiceManager.instance().list(guest)
             .then(data => {
                 message.addResponse("List fetched successfully", data)
                 return response.status(HTTP_STATUS.SUCCESS).json(message);
@@ -120,6 +101,9 @@ export class BookingServiceController {
 
         if(!request.body.rating){
             message.addError("Invalid Rating");
+        }
+        if(request.body.rating < 0 || request.body.rating > 5){
+            message.addError(`Rating value ${request.body.rating} is invalid. Possible rating values are 0,1,2,3,4,5`);
         }
 
         if(message.hasErrors()){

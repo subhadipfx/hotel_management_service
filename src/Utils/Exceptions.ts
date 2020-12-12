@@ -40,12 +40,13 @@ export class InvalidBookingStatusException extends Error {
     }
 }
 
-export class InvalidRatingException extends Error {
+export class AlreadyRatedBookingStatusException extends Error {
     constructor() {
         super();
-        this.message = "Rating value must stay between 0-5"
+        this.message = "This booking has been already rated, You cannot update it further";
     }
 }
+
 
 export class NotCheckedOutException extends Error{
     constructor() {

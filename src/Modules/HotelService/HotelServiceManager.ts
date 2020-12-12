@@ -52,6 +52,7 @@ export class HotelServiceManager {
         let query = {};
         if(service_type) query = {service_type}
         HotelService.find(query)
+            .populate('added_by','name email')
             .exec()
             .then(services => defer.resolve(services))
             .catch(error => defer.reject(error))
