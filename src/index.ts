@@ -9,6 +9,7 @@ import MongoConnection from "./Utils/MongoConnection";
 import {IndexRouter} from "./Routers";
 import PassportStrategy from "./Middlewares/PassportStrategy";
 import * as path from "path";
+import {BaseEventHandler} from "./Events/BaseEventHandler";
 class App {
     private readonly app:express.Express = null;
     private readonly server:Server = null;
@@ -38,6 +39,7 @@ class App {
 
         this.app.use(passportInitialize());
         passportUseStrategy(PassportStrategy.JWTStrategy());
+        BaseEventHandler.register();
 
         this.app.use(cors());
 

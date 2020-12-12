@@ -7,6 +7,8 @@ const BookingServiceSchema: Schema = new Schema<IBookingService>({
     bill_amount: {type: Number, required: true},
     status: {type: String, required: true, default: BOOKING_STATUS.CONFIRMED},
     rating: Number
+}, {
+    timestamps: true
 })
 
 export const BookingService = model<IBookingService>('BookingService', BookingServiceSchema);

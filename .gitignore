@@ -2,6 +2,7 @@ node_modules
 .idea
 dist
 public
+src/Events
 package-lock.json
 nodemon.json
 .env
