@@ -1,8 +1,7 @@
 import {Request, Response} from "express";
 import {ResponseMessage} from "../Utils/ResponseMessage";
-import {HTTP_STATUS} from "../Utils/Response";
+import {HTTP_STATUS} from "../Utils/ResponseMessage";
 import {UserManager} from "../Modules/User/UserManager";
-import {USER_ROLE} from "../Modules/User/Interfaces/IUser";
 
 export class UserController {
 

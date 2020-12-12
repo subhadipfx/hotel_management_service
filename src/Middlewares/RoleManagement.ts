@@ -1,6 +1,6 @@
 import {Request, Response, NextFunction} from "express"
 import {USER_ROLE} from "../Modules/User/Interfaces/IUser";
-import {HTTP_STATUS} from "../Utils/Response";
+import {HTTP_STATUS} from "../Utils/ResponseMessage";
 
 export class RoleManagement {
 

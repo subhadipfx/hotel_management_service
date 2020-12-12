@@ -24,7 +24,7 @@ class App {
                 throw new Error("PORT MUST BE A VALID INTEGER")
             }
             this.port = parseInt(port);
-        }else{
+        }else if(process.env.PORT){
             this.port = parseInt(process.env.PORT);
         }
     }

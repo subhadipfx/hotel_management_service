@@ -1,8 +1,7 @@
 import {Request, Response} from "express";
 import {ResponseMessage} from "../Utils/ResponseMessage";
-import {HTTP_STATUS} from "../Utils/Response";
-import {UserManager} from "../Modules/User/UserManager";
-import {ServiceNotFoundException, UserNotFoundException} from "../Utils/Exceptions";
+import {HTTP_STATUS} from "../Utils/ResponseMessage";
+import {ServiceNotFoundException} from "../Utils/Exceptions";
 import {HotelServiceManager} from "../Modules/HotelService/HotelServiceManager";
 import {BookingServiceManager} from "../Modules/BookingService/BookingServiceManager";
 

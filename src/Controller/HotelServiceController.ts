@@ -1,6 +1,6 @@
 import {Request, Response} from "express";
 import {ResponseMessage} from "../Utils/ResponseMessage";
-import {HTTP_STATUS} from "../Utils/Response";
+import {HTTP_STATUS} from "../Utils/ResponseMessage";
 import {HotelServiceManager} from "../Modules/HotelService/HotelServiceManager";
 
 export class HotelServiceController {
