@@ -24,6 +24,7 @@ class App {
             }
             this.port = parseInt(port);
         }else{
+            console.log(process.env);
             this.port = parseInt(process.env.APP_PORT);
         }
     }
