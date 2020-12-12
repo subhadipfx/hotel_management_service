@@ -33,7 +33,7 @@ class App {
         // console.log(__dirname);
         // this.app.set('public',path.join(__dirname,"/../public"));
 
-        this.app.use('/public',express.static(path.join(__dirname,'../public')));
+        this.app.use('/public',express.static(path.join(__dirname,'./public')));
 
         const upperBound = '1gb';
         this.app.use(express.json({limit: upperBound}))
