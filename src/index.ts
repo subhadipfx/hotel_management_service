@@ -2,6 +2,7 @@ import {createServer, Server} from "http";
 import * as express from "express";
 import {initialize as passportInitialize, use as passportUseStrategy} from "passport"
 import * as cors from "cors";
+require('dotenv').config()
 
 
 import MongoConnection from "./Utils/MongoConnection";
@@ -22,6 +23,8 @@ class App {
                 throw new Error("PORT MUST BE A VALID INTEGER")
             }
             this.port = parseInt(port);
+        }else{
+            this.port = parseInt(process.env.APP_PORT);
         }
     }
 
