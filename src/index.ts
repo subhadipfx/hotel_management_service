@@ -73,11 +73,12 @@ class App {
 }
 
 try{
-    if(process.argv.length > 2){
-        new App(process.argv.pop()).startServer();
-    }else{
-        new App().startServer();
-    }
+    new App().startServer();
+    // if(process.argv.length > 2){
+    //     new App(process.argv.pop()).startServer();
+    // }else{
+    //     new App().startServer();
+    // }
 }catch (e){
     console.log(e)
     process.exit();
