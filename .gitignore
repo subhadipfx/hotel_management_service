@@ -3,6 +3,5 @@ node_modules
 dist
 public
 package-lock.json
-ts
 nodemon.json
 .env
